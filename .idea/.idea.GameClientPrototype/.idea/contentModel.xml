@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ContentModelStore">
+    <e p="C:\Users\Andre6o6\AppData\Local\JetBrains\Rider2020.2\extResources" t="IncludeRecursive" />
+    <e p="C:\Users\Andre6o6\AppData\Local\JetBrains\Rider2020.2\resharper-host\Local\Transient\Rider\v202\SolutionCaches\_GameClientPrototype.-267478209.00" t="ExcludeRecursive" />
+    <e p="D:\PROJECTS\Unity\GameClientPrototype" t="IncludeRecursive">
+      <e p="Assembly-CSharp-Editor.csproj" t="IncludeRecursive" />
+      <e p="Assembly-CSharp-firstpass.csproj" t="IncludeRecursive" />
+      <e p="Assembly-CSharp.csproj" t="IncludeRecursive" />
+      <e p="Assets" t="Include">
+        <e p="Plugins" t="Include">
+          <e p="LiteNetLib" t="Include">
+            <e p="BaseChannel.cs" t="Include" />
+            <e p="ConnectionRequest.cs" t="Include" />
+            <e p="INetEventListener.cs" t="Include" />
+            <e p="Layers" t="Include">
+              <e p="Crc32cLayer.cs" t="Include" />
+              <e p="PacketLayerBase.cs" t="Include" />
+              <e p="XorEncryptLayer.cs" t="Include" />
+            </e>
+            <e p="NatPunchModule.cs" t="Include" />
+            <e p="NetConstants.cs" t="Include" />
+            <e p="NetDebug.cs" t="Include" />
+            <e p="NetManager.cs" t="Include" />
+            <e p="NetPacket.cs" t="Include" />
+            <e p="NetPacketPool.cs" t="Include" />
+            <e p="NetPeer.cs" t="Include" />
+            <e p="NetSocket.cs" t="Include" />
+            <e p="NetStatistics.cs" t="Include" />
+            <e p="NetUtils.cs" t="Include" />
+            <e p="ReliableChannel.cs" t="Include" />
+            <e p="SequencedChannel.cs" t="Include" />
+            <e p="Utils" t="Include">
+              <e p="CRC32C.cs" t="Include" />
+              <e p="FastBitConverter.cs" t="Include" />
+              <e p="INetSerializable.cs" t="Include" />
+              <e p="NetDataReader.cs" t="Include" />
+              <e p="NetDataWriter.cs" t="Include" />
+              <e p="NetPacketProcessor.cs" t="Include" />
+              <e p="NetSerializer.cs" t="Include" />
+              <e p="NtpPacket.cs" t="Include" />
+              <e p="NtpRequest.cs" t="Include" />
+            </e>
+          </e>
+        </e>
+        <e p="Scripts" t="Include">
+          <e p="NetworkingLayer" t="Include">
+            <e p="Client" t="Include">
+              <e p="Client.cs" t="Include" />
+              <e p="ClientPackets.cs" t="Include" />
+              <e p="Editor" t="Include">
+                <e p="NetworkedPrefabsManagerEditor.cs" t="Include" />
+                <e p="NetworkViewEditor.cs" t="Include" />
+              </e>
+              <e p="EventPackage.cs" t="Include" />
+              <e p="IOnEventCallback.cs" t="Include" />
+              <e p="ISerializeStream.cs" t="Include" />
+              <e p="NetworkedPrefabsManager.cs" t="Include" />
+              <e p="NetworkVIew.cs" t="Include" />
+              <e p="Player.cs" t="Include" />
+            </e>
+            <e p="Shared" t="Include">
+              <e p="Extensions.cs" t="Include" />
+              <e p="GamePackets.cs" t="Include" />
+            </e>
+          </e>
+          <e p="NetworkPositionView.cs" t="Include" />
+          <e p="OwnerIdToColor.cs" t="Include" />
+          <e p="Particle.cs" t="Include" />
+          <e p="PlayerMovement.cs" t="Include" />
+          <e p="SpawnParticles.cs" t="Include" />
+          <e p="UIName.cs" t="Include" />
+          <e p="Utils" t="Include">
+            <e p="ScriptableSingleton.cs" t="Include" />
+            <e p="Singleton.cs" t="Include" />
+          </e>
+        </e>
+        <e p="TextMesh Pro" t="Include">
+          <e p="Fonts" t="Include">
+            <e p="LiberationSans - OFL.txt" t="Include" />
+          </e>
+          <e p="Resources" t="Include">
+            <e p="LineBreaking Following Characters.txt" t="Include" />
+            <e p="LineBreaking Leading Characters.txt" t="Include" />
+          </e>
+          <e p="Shaders" t="Include">
+            <e p="TMP_Bitmap-Custom-Atlas.shader" t="Include" />
+            <e p="TMP_Bitmap-Mobile.shader" t="Include" />
+            <e p="TMP_Bitmap.shader" t="Include" />
+            <e p="TMP_SDF Overlay.shader" t="Include" />
+            <e p="TMP_SDF SSD.shader" t="Include" />
+            <e p="TMP_SDF-Mobile Masking.shader" t="Include" />
+            <e p="TMP_SDF-Mobile Overlay.shader" t="Include" />
+            <e p="TMP_SDF-Mobile SSD.shader" t="Include" />
+            <e p="TMP_SDF-Mobile.shader" t="Include" />
+            <e p="TMP_SDF-Surface-Mobile.shader" t="Include" />
+            <e p="TMP_SDF-Surface.shader" t="Include" />
+            <e p="TMP_SDF.shader" t="Include" />
+            <e p="TMP_Sprite.shader" t="Include" />
+            <e p="TMPro.cginc" t="Include" />
+            <e p="TMPro_Mobile.cginc" t="Include" />
+            <e p="TMPro_Properties.cginc" t="Include" />
+            <e p="TMPro_Surface.cginc" t="Include" />
+          </e>
+          <e p="Sprites" t="Include">
+            <e p="EmojiOne Attribution.txt" t="Include" />
+            <e p="EmojiOne.json" t="Include" />
+          </e>
+        </e>
+      </e>
+      <e p="GameClientPrototype.sln" t="IncludeFlat" />
+      <e p="obj" t="ExcludeRecursive" />
+      <e p="packages" t="ExcludeRecursive" />
+      <e p="Temp\Bin" t="ExcludeRecursive" />
+    </e>
+  </component>
+</project>
