@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace NetworkingLayer.Client
 {
-    public class SpawnObjectPacket : INetSerializable
+    public struct SpawnObjectPacket : INetSerializable
     {
         public int PrefabIndex;
         public int EntityId;

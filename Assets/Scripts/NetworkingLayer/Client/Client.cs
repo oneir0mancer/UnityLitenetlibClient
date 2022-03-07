@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Net;
@@ -16,15 +15,10 @@ namespace NetworkingLayer.Client
     //TODO make this a static class
     public class Client : Singleton<Client>, INetEventListener
     {
-        private const string ConnectionHost = "194.58.100.49";
+        //private const string ConnectionHost = "194.58.100.49";
+        private const string ConnectionHost = "localhost";
         private const int ConnectionPort = 9050;
         private const string ConnectionKey = "SomeConnectionKey";
-
-        public enum TargetGroup : sbyte
-        {
-            All = -2,
-            Others = -1,
-        }
 
         public Player LocalPlayer => _localPlayer;
 
@@ -36,13 +30,14 @@ namespace NetworkingLayer.Client
         [SerializeField] private InputField _nameInput;
     
         private List<IOnEventCallback> _callbackTargets = new List<IOnEventCallback>();
-        private List<ISerializeStream> _streamTargets = new List<ISerializeStream>();
+        private List<ISerializeStream> _streamTargets = new List<ISerializeStream>();    //TODO track ISerializeStreams in NetworkView
         private List<NetworkView> _networkObjects = new List<NetworkView>();
     
-        private NetManager _netManager;
-        private readonly NetDataWriter _dataWriter = new NetDataWriter();
         private readonly NetSerializer _netSerializer = new NetSerializer();
+        private NetworkPacketProcessor _netProcessor;
+        private NetworkPacketSender _netSender;
     
+        private NetManager _netManager;
         private NetPeer _server;
         private Player _localPlayer;
         private List<Player> _otherPlayers = new List<Player>();
@@ -50,6 +45,10 @@ namespace NetworkingLayer.Client
 
         private void Awake()
         {
+            _netSender = new NetworkPacketSender(_netSerializer);
+            _netProcessor = new NetworkPacketProcessor(_netSerializer);
+            InitializePacketCallbacks();
+            
             _netManager = new NetManager(this)
             {
                 UnconnectedMessagesEnabled = true, 
@@ -108,7 +107,21 @@ namespace NetworkingLayer.Client
         {
             return _networkObjects.Remove(view);
         }
-    
+
+        private void InitializePacketCallbacks()
+        {
+            //TODO do I need to RegisterNestedType<SpawnObjectPacket> ?
+            
+            _netProcessor.Subscribe<JoinAcceptPacket>((byte)DedicatedNetCode.Join, OnJoinAccepted);
+            _netProcessor.Subscribe<PlayerJoinedPacket>((byte)DedicatedNetCode.PlayerJoined, OnPlayerJoined);
+            _netProcessor.Subscribe<PlayerLeftPacket>((byte)DedicatedNetCode.PlayerLeft, OnPlayerLeft);
+            _netProcessor.SubscribeNetSerializable<SpawnObjectPacket>((byte)DedicatedNetCode.SpawnObject, OnSpawnObject);
+            _netProcessor.Subscribe<DestroySpawnedObjectPacket>((byte)DedicatedNetCode.DestroySpawnedObject, OnDestroySpawnedObject);
+            _netProcessor.Subscribe((byte) DedicatedNetCode.SerializeStream, HandleSerializeStream);
+            
+            _netProcessor.SubscribeDefault<sbyte>(OnCustomEventPackage);    //sbyte sender
+        }
+
         //TODO use Task/Thread
         private IEnumerator SerializeStreamsCoroutine()
         {
@@ -118,88 +131,45 @@ namespace NetworkingLayer.Client
                 foreach (var stream in _streamTargets)
                 {
                     if (!stream.IsLocal) continue;
-                    WriteStreamPacket(stream, DeliveryMethod.Unreliable);
+                    _netSender.SendStreamPacket(_server, stream, DeliveryMethod.Unreliable);
                 }
             
                 yield return new WaitForSeconds(0.05f);
             }
         }
-    
-        //Send custom event package. Structure:
-        // * sbyte target : -1 (others), or Id of a Player
-        // * byte eventCode : any value from client logic that needs to be <200
-        // * byte[] data : custom data that you get from NetDataWriter
-        //TODO not use NetDataWriter
+        
         public void SentEvent(NetDataWriter customData, byte code, sbyte target, DeliveryMethod deliveryMethod)
         {
-            _dataWriter.Reset();
-            _dataWriter.Put(target);
-            _dataWriter.Put(code);
-            //TODO Id?
-            _dataWriter.Put(customData.CopyData());
-            _server.Send(_dataWriter, deliveryMethod);
+            _netSender.SentEvent(_server, customData, code, target, deliveryMethod);
         }
     
-        public void SentEvent(NetDataWriter customData, byte code, TargetGroup targetGroup, DeliveryMethod deliveryMethod)
+        public void SentEvent(NetDataWriter customData, byte code, NetworkPacketSender.TargetGroup targetGroup, DeliveryMethod deliveryMethod)
         {
-            SentEvent(customData, code, (sbyte) targetGroup, deliveryMethod);
+            _netSender.SentEvent(_server, customData, code, targetGroup, deliveryMethod);
         }
         
+        //Need to call this overload for packets that are auto-serializable classes
         public void SentPacket<T>(T packet, DedicatedNetCode code, sbyte target, DeliveryMethod deliveryMethod) where T : class, new()
         {
-            if (packet is INetSerializable netSerializable)
-                _server.Send(WriteEventPacketManual(netSerializable, code, target), deliveryMethod);
-            else
-                _server.Send(WriteEventPacket(packet, code, target), deliveryMethod);
+            _netSender.SentPacket(_server, packet, code, target, deliveryMethod);
         }
         
-        public void SentPacket<T>(T packet, DedicatedNetCode code, TargetGroup targetGroup, DeliveryMethod deliveryMethod) where T : class, new()
+        //Need to call this overload for packets that are auto-serializable classes
+        public void SentPacket<T>(T packet, DedicatedNetCode code, NetworkPacketSender.TargetGroup targetGroup, DeliveryMethod deliveryMethod) where T : class, new()
         {
-            if (packet is INetSerializable netSerializable)
-                _server.Send(WriteEventPacketManual(netSerializable, code, (sbyte)targetGroup), deliveryMethod);
-            else
-                _server.Send(WriteEventPacket(packet, code, (sbyte)targetGroup), deliveryMethod);
-        }
-    
-        //Send dedicated event package. Structure:
-        // * sbyte target : -1 (others), or Id of a Player
-        // * byte eventCode : one of DedicatedNetCode
-        // * byte[] data : data that you get by auto-serializing T class using _netSerializer
-        //TODO shared with server, so maybe not here
-        private NetDataWriter WriteEventPacket<T>(T packet, DedicatedNetCode code, sbyte target = -1) where T : class, new()
-        {
-            _dataWriter.Reset();
-            _dataWriter.Put(target);
-            _dataWriter.Put((byte)code);
-            //TODO Id?
-            _netSerializer.Serialize(_dataWriter, packet);
-            return _dataWriter;
+            _netSender.SentPacket(_server, packet, code, targetGroup, deliveryMethod);
         }
         
-        private NetDataWriter WriteEventPacketManual<T>(T packet, DedicatedNetCode code, sbyte target = -1) where T : INetSerializable
+        //Need to call this overload for packets that are INetSerializable structs
+        public void SentPacketSerializable<T>(T packet, DedicatedNetCode code, sbyte target, DeliveryMethod deliveryMethod) where T : struct, INetSerializable
         {
-            _dataWriter.Reset();
-            _dataWriter.Put(target);
-            _dataWriter.Put((byte)code);
-            packet.Serialize(_dataWriter);
-            return _dataWriter;
+            _netSender.SentPacketSerializable(_server, packet, code, target, deliveryMethod);
         }
-
-        //Send stream package. Structure:
-        // * sbyte target : ignored by server, always -1
-        // * byte eventCode : always DedicatedNetCode.SerializeStream
-        // * int entityId : unique id that is allocated in NetworkView and sent with spawn event
-        // * byte[] data : data that you get in SendStream implementation
-        public void WriteStreamPacket(ISerializeStream stream, DeliveryMethod deliveryMethod)
-        {
-            _dataWriter.Reset();
-            _dataWriter.Put((sbyte)-1);    //Target
-            _dataWriter.Put((byte)DedicatedNetCode.SerializeStream);    //Event code
-            _dataWriter.Put(stream.EntityId);
-
-            stream.SendStream(_dataWriter);
         
-            _server.Send(_dataWriter, deliveryMethod);
+        //Need to call this overload for packets that are INetSerializable structs
+        public void SentPacketSerializable<T>(T packet, DedicatedNetCode code, NetworkPacketSender.TargetGroup targetGroup, DeliveryMethod deliveryMethod) where T : struct, INetSerializable
+        {
+            _netSender.SentPacketSerializable(_server, packet, code, targetGroup, deliveryMethod);
         }
 
         void INetEventListener.OnPeerConnected(NetPeer peer)
@@ -208,7 +178,7 @@ namespace NetworkingLayer.Client
 
             _server = peer;
             JoinReceivedPacket jr = new JoinReceivedPacket {UserName = NickName};
-            _server.Send(WriteEventPacket(jr, DedicatedNetCode.Join), DeliveryMethod.ReliableOrdered);
+            SentPacket(jr, DedicatedNetCode.Join, NetworkPacketSender.TargetGroup.Others, DeliveryMethod.ReliableOrdered);
         }
 
         void INetEventListener.OnPeerDisconnected(NetPeer peer, DisconnectInfo disconnectInfo)
@@ -223,48 +193,16 @@ namespace NetworkingLayer.Client
 
         void INetEventListener.OnNetworkReceive(NetPeer peer, NetPacketReader reader, DeliveryMethod deliveryMethod)
         {
-            //We get all the network msgs here. Then we turn packages into specific events with args
-            // and go through every script with OnEvent (need to manage a list)
-        
             sbyte sender = reader.GetSByte();
-            byte packetNetCode = reader.GetByte();
+            _netProcessor.ReadAllPackets(reader, sender);
+        }
 
-            if (packetNetCode >= GamePackets.DedicatedNetCodes)
+        private void OnCustomEventPackage(NetDataReader reader, sbyte sender)
+        {
+            EventPackage eventPackage = new EventPackage(reader, sender);
+            foreach (var target in _callbackTargets)
             {
-                DedicatedNetCode dedicatedNetCode = (DedicatedNetCode) packetNetCode;
-                switch (dedicatedNetCode)
-                {
-                    case DedicatedNetCode.Join:
-                        OnJoinAccepted(_netSerializer.Deserialize<JoinAcceptPacket>(reader));
-                        break;
-                    case DedicatedNetCode.PlayerJoined:
-                        OnPlayerJoined(_netSerializer.Deserialize<PlayerJoinedPacket>(reader));
-                        break;
-                    case DedicatedNetCode.PlayerLeft:
-                        OnPlayerLeft(_netSerializer.Deserialize<PlayerLeftPacket>(reader));
-                        break;
-                    case DedicatedNetCode.SerializeStream:
-                        HandleSerializeStream(reader);
-                        break;
-                    case DedicatedNetCode.SpawnObject:
-                        SpawnObjectPacket spawnPt = new SpawnObjectPacket();
-                        spawnPt.Deserialize(reader);
-                        OnSpawnObject(spawnPt);
-                        break;
-                    case DedicatedNetCode.DestroySpawnedObject:
-                        OnDestroySpawnedObject(_netSerializer.Deserialize<DestroySpawnedObjectPacket>(reader));
-                        break;
-                    default:
-                        throw new ArgumentOutOfRangeException();
-                }
-            }
-            else
-            { 
-                EventPackage eventPackage = new EventPackage(reader, sender, packetNetCode);
-                foreach (var target in _callbackTargets)
-                {
-                    target.OnEvent(eventPackage);
-                }
+                target.OnEvent(eventPackage);
             }
         }
 
@@ -317,7 +255,7 @@ namespace NetworkingLayer.Client
             Destroy(obj.gameObject);
         }
 
-        private void HandleSerializeStream(NetPacketReader reader)
+        private void HandleSerializeStream(NetDataReader reader)
         {
             int entityId = reader.GetInt();
         

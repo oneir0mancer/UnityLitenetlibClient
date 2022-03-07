@@ -1,4 +1,4 @@
-using LiteNetLib;
+using LiteNetLib.Utils;
 
 namespace NetworkingLayer.Client
 {
@@ -10,12 +10,19 @@ namespace NetworkingLayer.Client
         public byte Code { get; }
 
         //public int ServerTimestamp { get; }
-        public NetPacketReader Data { get; }
+        public NetDataReader Data { get; }
 
-        public EventPackage(NetPacketReader reader, int senderId, byte eventCode)
+        public EventPackage(NetDataReader reader, int senderId, byte eventCode)
         {
             SenderId = senderId;
             Code = eventCode;
+            Data = reader;
+        }
+        
+        public EventPackage(NetDataReader reader, int senderId)
+        {
+            SenderId = senderId;
+            Code = reader.GetByte();
             Data = reader;
         }
     }

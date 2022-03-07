@@ -6,6 +6,7 @@ using UnityEngine;
 using UnityEditor;
 #endif
 
+//TODO need to trigger Unity serialization when Add button is pressed, otherwise it doesn't save on disk
 namespace NetworkingLayer.Client
 {
     [CreateAssetMenu(menuName = "Networked Prefabs")]
@@ -118,7 +119,7 @@ namespace NetworkingLayer.Client
                 Position = position,
                 RotationAngle = rotation.eulerAngles.y,
             };
-            Client.Instance.SentPacket(pt, DedicatedNetCode.SpawnObject, Client.TargetGroup.Others, DeliveryMethod.ReliableOrdered);
+            Client.Instance.SentPacketSerializable(pt, DedicatedNetCode.SpawnObject, NetworkPacketSender.TargetGroup.Others, DeliveryMethod.ReliableOrdered);
         }
 
         public void NetworkDestroy(GameObject obj)
@@ -129,7 +130,7 @@ namespace NetworkingLayer.Client
             if (!networkView.IsLocal) return;
             
             DestroySpawnedObjectPacket pt = new DestroySpawnedObjectPacket {EntityId = networkView.EntityId};
-            Client.Instance.SentPacket(pt, DedicatedNetCode.DestroySpawnedObject, Client.TargetGroup.Others, DeliveryMethod.ReliableOrdered);
+            Client.Instance.SentPacket(pt, DedicatedNetCode.DestroySpawnedObject, NetworkPacketSender.TargetGroup.Others, DeliveryMethod.ReliableOrdered);
             
             Destroy(obj);
         }

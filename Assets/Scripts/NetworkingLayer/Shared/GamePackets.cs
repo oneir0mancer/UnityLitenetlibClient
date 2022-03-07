@@ -2,6 +2,7 @@
 
 namespace NetworkingLayer.Shared
 {
+    //Config that tells where DedicatedNetCodes start and where ServerNetCodes start
     public static class GamePackets
     {
         public const int DedicatedNetCodes = 200;
@@ -15,10 +16,12 @@ namespace NetworkingLayer.Shared
         SpawnObject = GamePackets.DedicatedNetCodes,
         SerializeStream,
         DestroySpawnedObject,
+        //LoadScene
 
         Join = GamePackets.ServerNetCodes,    //JoinReceived for server, JoinAccepted for client
         PlayerJoined,  //For other peers
         PlayerLeft,
+        //PlayerReady
     }
 
     #region Autoserialized packets

@@ -1,11 +1,46 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="BranchesTreeState">
+    <expand>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:origin" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+    </expand>
+    <select />
+  </component>
   <component name="ChangeListManager">
-    <list default="true" id="a274804e-9ad4-4b72-a393-ab9f12488593" name="Default Changelist" comment="" />
+    <list default="true" id="a274804e-9ad4-4b72-a393-ab9f12488593" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/NetworkingLayer/Shared/NetworkPacketProcessor.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/NetworkingLayer/Shared/NetworkPacketProcessor.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/NetworkingLayer/Shared/NetworkPacketSender.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/NetworkingLayer/Shared/NetworkPacketSender.cs.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.GameClientPrototype/.idea/contentModel.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.GameClientPrototype/.idea/contentModel.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.GameClientPrototype/.idea/indexLayout.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.GameClientPrototype/.idea/indexLayout.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.GameClientPrototype/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.GameClientPrototype/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Resources/Networked Prefabs Manager.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/Networked Prefabs Manager.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/NetworkingLayer/Client/Client.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/NetworkingLayer/Client/Client.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/NetworkingLayer/Client/ClientPackets.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/NetworkingLayer/Client/ClientPackets.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/NetworkingLayer/Client/EventPackage.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/NetworkingLayer/Client/EventPackage.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/NetworkingLayer/Client/NetworkedPrefabsManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/NetworkingLayer/Client/NetworkedPrefabsManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/NetworkingLayer/Shared/GamePackets.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/NetworkingLayer/Shared/GamePackets.cs" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.ugui@1.0.0/Runtime/UI/Core/InputField.cs" root0="SKIP_HIGHLIGHTING" />
@@ -45,20 +80,22 @@
         <option value="$PROJECT_DIR$/Assets/Scripts/NetworkingLayer/Client/IOnEventCallback.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Editor/NetworkedPrefabsManagerEditor.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/OwnerIdToColor.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/NetworkingLayer/Client/EventPackage.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/NetworkingLayer/Client/Editor/NetworkedPrefabsManagerEditor.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/NetworkingLayer/Client/Editor/NetworkViewEditor.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/NetworkingLayer/Client/ISerializeStream.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/NetworkingLayer/Shared/Extensions.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/NetworkingLayer/Shared/GamePackets.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/NetworkingLayer/Client/NetworkView.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Particle.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/NetworkingLayer/Client/NetworkedPrefabsManager.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/NetworkingLayer/Client/ClientPackets.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/NetworkingLayer/Client/Client.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/SpawnParticles.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/PlayerMovement.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/NetworkPositionView.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/NetworkingLayer/Shared/GamePackets.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/NetworkingLayer/Client/EventPackage.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/NetworkingLayer/Client/ClientPackets.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/NetworkingLayer/Client/Client.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/NetworkingLayer/Shared/NetworkPacketProcessor.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/NetworkingLayer/Shared/NetworkPacketSender.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/NetworkingLayer/Client/NetworkedPrefabsManager.cs" />
       </list>
     </option>
   </component>
@@ -115,6 +152,8 @@
       <workItem from="1646391698397" duration="711000" />
       <workItem from="1646415567782" duration="5844000" />
       <workItem from="1646493848349" duration="18143000" />
+      <workItem from="1646563747056" duration="652000" />
+      <workItem from="1646646577388" duration="11760000" />
     </task>
     <servers />
   </component>
@@ -123,6 +162,17 @@
   </component>
   <component name="UnityProjectConfiguration" hasMinimizedUI="true" />
   <component name="UnityUnitTestConfiguration" currentTestLauncher="EditMode" />
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
   <component name="VcsManagerConfiguration">
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
   </component>
@@ -135,9 +185,13 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="350" y="114" key="RiderGenerateDialog/0.0.1536.824/1920.0.1536.824@0.0.1536.824" timestamp="1646499872411" />
-    <state x="431" y="145" width="672" height="678" key="search.everywhere.popup" timestamp="1646341627924">
+    <state x="93" y="93" width="1350" height="638" key="VCS.FileHistoryDialog" timestamp="1646676456905">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="431" y="145" width="672" height="678" key="search.everywhere.popup/0.0.1536.824/1920.0.1536.824@0.0.1536.824" timestamp="1646341627924" />
+    <state x="93" y="93" width="1350" height="638" key="VCS.FileHistoryDialog/0.0.1536.824/1920.0.1536.824@0.0.1536.824" timestamp="1646676456905" />
+    <state x="431" y="145" width="672" height="678" key="search.everywhere.popup" timestamp="1646656238600">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="431" y="145" width="672" height="678" key="search.everywhere.popup/0.0.1536.824/1920.0.1536.824@0.0.1536.824" timestamp="1646656238600" />
   </component>
 </project>

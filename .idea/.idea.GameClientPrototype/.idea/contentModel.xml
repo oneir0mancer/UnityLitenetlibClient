@@ -62,6 +62,8 @@
             <e p="Shared" t="Include">
               <e p="Extensions.cs" t="Include" />
               <e p="GamePackets.cs" t="Include" />
+              <e p="NetworkPacketProcessor.cs" t="Include" />
+              <e p="NetworkPacketSender.cs" t="Include" />
             </e>
           </e>
           <e p="NetworkPositionView.cs" t="Include" />
